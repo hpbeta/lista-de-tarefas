@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface ListItemProps {
+  $finished?: boolean;
+}
+
 export const Container = styled.div`
   h1 {
     font-family: sans-serif;
@@ -49,7 +53,7 @@ export const ContainerList = styled.ul`
   }
 `;
 
-export const ListItem = styled.li`
+export const ListItem = styled.li<ListItemProps>`
   display: flex;
   justify-content: space-around;
   align-items: center;

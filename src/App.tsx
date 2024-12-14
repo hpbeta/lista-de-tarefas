@@ -1,42 +1,48 @@
+import React from "react";
 import { useState } from "react";
 import { Container, ContainerList, Form, ListItem } from "./styles";
 import { IoMdCheckmark } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 
+interface TaskProps {
+  finished: boolean;
+  id: number;
+  name: string;
+}
+
 function App() {
   const [inputValue, setInputValue] = useState("");
-  const [task, setTask] = useState([]);
+  const [task, setTask] = useState<TaskProps[]>([]);
 
-  function addTask(e) {
+  function addTask(e: { preventDefault: () => void }) {
     e.preventDefault();
-    if(inputValue === '') {
-      alert('Digite uma tarefa no campo')
-      return
+    if (inputValue === "") {
+      alert("Digite uma tarefa no campo");
+      return;
     }
-    
-    setTask([ ...task, 
-       { 
-        id: task.length,  
+
+    setTask([
+      ...task,
+      {
+        id: task.length,
         name: inputValue,
-        finished: false 
-       }, 
-      ]);
-    setInputValue('')
+        finished: false,
+      },
+    ]);
+    setInputValue("");
   }
 
-  function toggleFinished(index){
-    const newArr = task.map((item, i) => (
-      i === index ? {...item, finished: !item.finished} : item
-    ))
+  function toggleFinished(index: number) {
+    const newArr = task.map((item, i) =>
+      i === index ? { ...item, finished: !item.finished } : item
+    );
 
-    setTask(newArr)
+    setTask(newArr);
   }
 
-  function deleteTask(index) {
-    const newArr = task.filter((_, item) => (
-      item !== index
-    ))
-    setTask(newArr)
+  function deleteTask(index: number) {
+    const newArr = task.filter((_, item) => item !== index);
+    setTask(newArr);
   }
 
   return (
@@ -44,7 +50,7 @@ function App() {
       <h1>Lista de tarefas</h1>
       <Form>
         <input
-          onChange={ (e) => setInputValue(e.target.value)}
+          onChange={(e) => setInputValue(e.target.value)}
           value={inputValue}
           type="text"
           placeholder="Digite sua tarefa"
